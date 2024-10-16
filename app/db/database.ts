@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite/legacy';
 
-// Define types for Group and Task
+
 export interface Group {
   id: number;
   name: string;
@@ -14,14 +14,14 @@ export interface Task {
   done: boolean;
 }
 
-// Open SQLite database
+
 function openDatabase() {
   return SQLite.openDatabase('todo.db');
 }
 
 const db = openDatabase();
 
-// Initialize the database with tables
+
 export const init = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -34,7 +34,7 @@ export const init = (): Promise<void> => {
         );`,
         [],
         () => {
-          // Create tasks table after groups table is created
+       
           tx.executeSql(
             `CREATE TABLE IF NOT EXISTS tasks (
               id INTEGER PRIMARY KEY NOT NULL,
@@ -61,7 +61,7 @@ export const init = (): Promise<void> => {
   });
 };
 
-// CRUD Operations for Groups
+
 export const fetchGroups = (): Promise<Group[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -84,7 +84,7 @@ export const insertGroup = (groupName: string): Promise<number> => {
       tx.executeSql(
         `INSERT INTO groups (name) VALUES (?);`,
         [groupName],
-        (_, result) => resolve(result.insertId), // Return the ID of the inserted group
+        (_, result) => resolve(result.insertId),
         (_, error) => {
           console.error('Error inserting group:', error);
           reject(error);
@@ -94,7 +94,7 @@ export const insertGroup = (groupName: string): Promise<number> => {
   });
 };
 
-// CRUD Operations for Tasks
+
 export const fetchTasks = (groupId: number): Promise<Task[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -122,7 +122,7 @@ export const insertTask = (groupId: number, title: string, description: string):
       tx.executeSql(
         `INSERT INTO tasks (groupId, title, description) VALUES (?, ?, ?);`,
         [groupId, title, description],
-        (_, result) => resolve(result.insertId), // Return the ID of the inserted task
+        (_, result) => resolve(result.insertId), 
         (_, error) => {
           console.error('Error inserting task:', error);
           reject(error);
@@ -164,16 +164,16 @@ export const deleteTask = (id: number): Promise<void> => {
   });
 };
 
-// Modify the deleteGroup function to delete the related tasks
+
 export const deleteGroup = async (groupId: number): Promise<void> => {
   return new Promise((resolve, reject) => {
     db.transaction(async (tx) => {
-      // Delete tasks associated with the groupId (this will automatically handle cascading if foreign key constraint is applied)
+    
       tx.executeSql(
         `DELETE FROM tasks WHERE groupId = ?;`,
         [groupId],
         async () => {
-          // Then, delete the group itself
+     
           tx.executeSql(
             `DELETE FROM groups WHERE id = ?;`,
             [groupId],

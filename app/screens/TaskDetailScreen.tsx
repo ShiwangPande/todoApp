@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Optional: For icons
-import CustomHeader from '../components/CustomHeader';
 
 interface Task {
   id: number;

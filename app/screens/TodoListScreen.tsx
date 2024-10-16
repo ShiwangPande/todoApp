@@ -10,12 +10,11 @@ const TodoListScreen: React.FC<TodoListScreenProps> = ({ route, navigation }) =>
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    // Load tasks when the component is focused or when groupId changes
     useFocusEffect(
         React.useCallback(() => {
             loadTasks();
 
-            // Reset tasks when the groupId changes
+       
             return () => {
                 setTasks([]);
             };
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
         color: '#666',
     },
     listContainer: {
-        paddingBottom: 100, // Add padding for the button
+        paddingBottom: 100,
     },
     addButton: {
         position: 'absolute',

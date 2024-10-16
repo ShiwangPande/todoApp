@@ -3,7 +3,7 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Alert, Text, ActivityInd
 import { insertTask } from '../db/database';
 
 const TaskCreationScreen = ({ route, navigation }) => {
-    const { groupId, onGoBack } = route.params; // Get the callback from route params
+    const { groupId, onGoBack } = route.params;
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
@@ -25,12 +25,12 @@ const TaskCreationScreen = ({ route, navigation }) => {
             await insertTask(groupId, title, description);
             Alert.alert('Success', 'Task created successfully!');
 
-            // Call the onGoBack callback to refresh tasks
+       
             if (onGoBack) {
                 onGoBack();
             }
 
-            navigation.goBack(); // Go back to the TodoList screen
+            navigation.goBack(); 
         } catch (error) {
             Alert.alert('Error', 'Failed to create task. Please try again.');
         } finally {

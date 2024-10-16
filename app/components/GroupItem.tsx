@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, Animated } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient'; // Make sure to install this package
+import { LinearGradient } from 'expo-linear-gradient'; 
 
 const GroupItem = ({ group, onSelect, onDelete }) => {
-  const fadeAnim = new Animated.Value(1); // Initial opacity value
+  const fadeAnim = new Animated.Value(1);
 
   const confirmDelete = () => {
     Alert.alert(
@@ -41,7 +41,7 @@ const GroupItem = ({ group, onSelect, onDelete }) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={confirmDelete} style={styles.deleteButton}>
         <LinearGradient
-          colors={['#D32F2F', '#B71C1C']} // Dark red gradient for the delete button
+          colors={['#D32F2F', '#B71C1C']} 
           style={styles.gradientBackground}
         >
           <View style={styles.deleteButtonContent}>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '600',
     fontSize: 16,
-    marginLeft: 5, // Space between icon and text
+    marginLeft: 5,
   },
 });
 

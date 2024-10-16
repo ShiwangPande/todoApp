@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Task } from '../db/database';
-import { MaterialIcons } from '@expo/vector-icons'; // Ensure you have this installed
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 interface TaskItemProps {
     task: Task;
@@ -17,19 +17,19 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onComplete 
                 style={styles.taskTitleContainer} 
                 onPress={onComplete}
             >
-                {/* Ensure task.title is a string */}
+               
                 <Text style={[styles.taskTitle, { textDecorationLine: task.done ? 'line-through' : 'none', color: task.done ? '#4CAF50' : '#333' }]}>
-                    {task.title || "No Title"} {/* Fallback if title is missing */}
+                    {task.title || "No Title"} 
                 </Text>
                 <MaterialIcons 
                     name={task.done ? 'check-circle' : 'radio-button-unchecked'} 
-                    size={28} // Increased icon size
-                    color={task.done ? '#4CAF50' : '#007bff'} // Change icon color based on status
+                    size={28} 
+                    color={task.done ? '#4CAF50' : '#007bff'} 
                 />
             </TouchableOpacity>
-            {/* Ensure task.description is a string */}
+           
             <Text style={styles.taskDescription}>
-                {task.description || "No Description"} {/* Fallback if description is missing */}
+                {task.description || "No Description"}
             </Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={onEdit} style={styles.editButton}>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     taskContainer: {
         padding: 15,
         marginVertical: 5,
-        borderRadius: 10, // Increased border radius for softer corners
+        borderRadius: 10, 
         backgroundColor: '#ffffff',
         shadowColor: '#000',
         shadowOffset: {
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     taskTitle: {
-        fontSize: 18, // Increased font size for better readability
-        fontWeight: '600', // Semi-bold for better hierarchy
+        fontSize: 18,
+        fontWeight: '600', 
         flex: 1,
     },
     taskDescription: {
         fontSize: 14,
-        color: '#666', // Slightly lighter color for the description
+        color: '#666',
         marginTop: 5,
         marginBottom: 10,
     },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     editButton: {
-        backgroundColor: '#4CAF50', // Green color for edit
+        backgroundColor: '#4CAF50',
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 5,
@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 1.5,
-        elevation: 3, // Add elevation for Android
+        elevation: 3, 
     },
     deleteButton: {
-        backgroundColor: '#FF3D00', // A brighter red for better visibility
+        backgroundColor: '#FF3D00', 
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 5,
@@ -106,12 +106,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 1.5,
-        elevation: 3, // Add elevation for Android
+        elevation: 3, 
     },
     buttonText: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 16, // Increased font size for better readability
+        fontSize: 16, 
     },
 });
 

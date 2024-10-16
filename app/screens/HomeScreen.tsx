@@ -51,8 +51,8 @@ const HomeScreen = ({ navigation }) => {
         text: 'Delete',
         onPress: async () => {
           try {
-            await deleteGroup(groupId);  // Delete group and associated todos
-            loadGroups();  // Reload the group list
+            await deleteGroup(groupId); 
+            loadGroups(); 
           } catch (error) {
             console.error('Failed to delete group', error);
             Alert.alert('Error', 'Failed to delete group. Please try again.');
@@ -121,14 +121,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#EDEEF0', // Light background color
+    backgroundColor: '#EDEEF0', 
   },
   title: {
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#2D3748', // Dark text color
+    color: '#2D3748',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -159,11 +159,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Darker overlay for modal
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   modalContent: {
     width: '90%',
-    backgroundColor: '#FFFFFF', // White background for the modal
+    backgroundColor: '#FFFFFF', 
     padding: 30,
     borderRadius: 15,
     alignItems: 'center',
@@ -171,13 +171,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
-    elevation: 10, // For Android shadow effect
+    elevation: 10, 
   },
   modalTitle: {
     fontSize: 24,
     marginBottom: 20,
     fontWeight: 'bold',
-    color: '#4CAF50', // Green color for the title
+    color: '#4CAF50',
   },
   input: {
     borderWidth: 1,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 5,
     width: '100%',
-    backgroundColor: '#FAFAFA', // Light input background
+    backgroundColor: '#FAFAFA',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
