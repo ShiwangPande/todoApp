@@ -1,40 +1,108 @@
 import React, { useEffect } from 'react';
-import { init, fetchGroups, insertGroup }  from './database/database';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import TodoListScreen from './screens/TodoListScreen';
+import TaskDetailScreen from './screens/TaskDetailScreen';
 import TaskCreationScreen from './screens/TaskCreationScreen';
+import { init } from './db/database';
+import { Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
-export default function App() {
+const App = () => {
   useEffect(() => {
-    // Initialize the database
-    init()
-      .then(() => {
-        console.log('Database initialized');
-        // Insert a new group for testing
-        return insertGroup('My Group');
-      })
-      .then(() => {
-        return fetchGroups();
-      })
-      .then((groups) => {
-        console.log('Fetched groups:', groups);
-      })
-      .catch((err) => {
-        console.error('Database initialization failed:', err);
-      });
+    const initializeDatabase = async () => {
+      try {
+        await init();
+        console.log('Database initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize database', error);
+      }
+    };
+
+    initializeDatabase();
   }, []);
 
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="TodoList" component={TodoListScreen} />
-        <Stack.Screen name="TaskCreation" component={TaskCreationScreen} />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#3498db',
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          },
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: 'Home',
+            headerLeft: () => (
+              <Icon
+                name={Platform.OS === 'android' ? 'home' : 'home'}
+                size={24}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="TodoList"
+          component={TodoListScreen}
+          options={{
+            title: 'Todo List',
+            headerLeft: () => (
+              <Icon
+                name={Platform.OS === 'android' ? 'list' : 'list'}
+                size={24}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="TaskDetail"
+          component={TaskDetailScreen}
+          options={{
+            title: 'Task Details',
+            headerLeft: () => (
+              <Icon
+                name={Platform.OS === 'android' ? 'information-circle' : 'information-circle'}
+                size={24}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="TaskCreation"
+          component={TaskCreationScreen}
+          options={{
+            title: 'Task Creation',
+            headerLeft: () => (
+              <Icon
+                name={Platform.OS === 'android' ? 'add-circle' : 'add-circle'}
+                size={24}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+            ),
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default App;

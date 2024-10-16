@@ -1,28 +1,114 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import TaskForm from '../components/TaskForm';
-import { insertTask } from '../database/database';
+import { View, TextInput, TouchableOpacity, StyleSheet, Alert, Text, ActivityIndicator } from 'react-native';
+import { insertTask } from '../db/database';
 
 const TaskCreationScreen = ({ route, navigation }) => {
-  const { groupId, task } = route.params || {};
+    const { groupId, onGoBack } = route.params; // Get the callback from route params
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [loading, setLoading] = useState(false);
 
-  const handleSave = async (taskData) => {
-    await insertTask(groupId, taskData.title, taskData.description);
-    navigation.goBack();
-  };
+    const handleAddTask = async () => {
+        if (!title.trim()) {
+            Alert.alert('Error', 'Please enter a task title.');
+            return;
+        }
 
-  return (
-    <View style={styles.container}>
-      <TaskForm task={task} onSave={handleSave} onCancel={() => navigation.goBack()} />
-    </View>
-  );
+        if (!description.trim()) {
+            Alert.alert('Error', 'Please enter a task description.');
+            return;
+        }
+
+        setLoading(true); 
+
+        try {
+            await insertTask(groupId, title, description);
+            Alert.alert('Success', 'Task created successfully!');
+
+            // Call the onGoBack callback to refresh tasks
+            if (onGoBack) {
+                onGoBack();
+            }
+
+            navigation.goBack(); // Go back to the TodoList screen
+        } catch (error) {
+            Alert.alert('Error', 'Failed to create task. Please try again.');
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Create New Task</Text>
+            </View>
+            <TextInput
+                placeholder="Task Title"
+                value={title}
+                onChangeText={setTitle}
+                style={styles.input}
+                autoFocus
+            />
+            <TextInput
+                placeholder="Task Description"
+                value={description}
+                onChangeText={setDescription}
+                style={styles.input}
+                multiline
+                numberOfLines={4}
+            />
+            <TouchableOpacity style={styles.createButton} onPress={handleAddTask} disabled={loading}>
+                {loading ? (
+                    <ActivityIndicator color="#fff" />
+                ) : (
+                    <Text style={styles.buttonText}>Create Task</Text>
+                )}
+            </TouchableOpacity>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#F5F5F5',
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        flex: 1,
+        textAlign: 'center',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 15,
+        marginVertical: 10,
+        borderRadius: 8,
+        backgroundColor: '#FAFAFA',
+        fontSize: 16,
+        color: '#333',
+    },
+    createButton: {
+        backgroundColor: '#4CAF50',
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
 });
 
 export default TaskCreationScreen;
